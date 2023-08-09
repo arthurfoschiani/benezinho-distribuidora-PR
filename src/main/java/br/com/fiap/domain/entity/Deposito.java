@@ -8,6 +8,7 @@ public class Deposito {
     @Id
     @SequenceGenerator(name = "SQ_DEPOSITO", sequenceName = "SQ_DEPOSITO", allocationSize = 1, initialValue = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_DEPOSITO")
+    @Column(name = "ID_DEPOSITO")
     private Long id;
     @Column(name = "NM_DEPOSITO")
     private String name;
