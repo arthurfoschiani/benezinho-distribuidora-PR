@@ -1,11 +1,24 @@
 package br.com.fiap.domain.entity;
 
+import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 
+@Entity
+@Table(name = "TB_PRODUTO", uniqueConstraints = {
+        @UniqueConstraint(name = "UK_NM_PRODUTO", columnNames = {"NM_PRODUTO"})
+})
 public class Produto {
+    @Id
+    @SequenceGenerator(name = "SQ_PRODUTO", sequenceName = "SQ_PRODUTO", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_PRODUTO")
+    @Column(name = "ID_PRODUTO")
     private Long id;
+    @Column(name = "NM_PRODUTO", nullable = false)
     private String nome;
+    @Column(name = "DS_PRODUTO", nullable = false)
     private String descricao;
+    @Column(name = "VL_PRODUTO", nullable = false)
     private BigDecimal valor;
 
     public Produto() {
