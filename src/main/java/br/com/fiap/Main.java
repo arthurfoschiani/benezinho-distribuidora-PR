@@ -9,6 +9,7 @@ import jakarta.persistence.Persistence;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -31,11 +32,17 @@ public class Main {
 
         while (count < qntd) {
             var item = new ItemEstocado().setId(null).setDeposito(dep1).setProduto(p1).setEntrada(LocalDateTime.now()).setNumeroSerie(count + "NR" + qntd + "-" + p1.getId() + "-" + dep1.getId());
+            var itemDep2 = new ItemEstocado().setId(null).setDeposito(dep2).setProduto(p1).setEntrada(LocalDateTime.now()).setNumeroSerie(count + "NR" + qntd + "-" + p1.getId() + "-" + dep2.getId());
             manager.persist(item);
+            manager.persist(itemDep2);
             count ++;
         }
 
         manager.getTransaction().commit();
+
+        var jpbl = "FROM ItemEstocado i join fetch i.deposito where i.deposito.id = 2L";
+        List list = manager.createQuery(jpbl).getResultList();
+        list.forEach(System.out::println);
         manager.close();
         factory.close();
     }
